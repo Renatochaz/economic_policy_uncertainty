@@ -7,6 +7,9 @@ library(tidyr)
 library(readxl)
 library(DescTools)
 library(GetDFPData2)
+library(stargazer)
+library(plyr)
+library(xtable)
 source("global.r")
 
 ## Define the name which differentiate the datasets to load.
@@ -138,6 +141,7 @@ write.csv(ds, "raw-data/py_create_age_epu.csv", row.names = FALSE)
 df_info <- get_info_companies(tempdir())
 write.csv(df_info, "raw-data/info_companies.csv", row.names = FALSE)
 
+## Run py-age-epu.ipynb and py-sales.ipynb
 ## Open returned datasets from Python.
 ds <- read.csv("raw-data/ds_to_r.csv",
     stringsAsFactors = FALSE, fileEncoding = "UTF-8"
@@ -183,11 +187,13 @@ rownames(sales) <- 1:nrow(sales)
 ## Adding construct cv for industry.
 sales$cv_industria <- vec_tmp
 
+
 ## Create dataset to python growth sales operation.
 write.csv(sales, "raw-data/growth_sales.csv", row.names = FALSE)
 write.csv(ds, "raw-data/py_growth_sales.csv", row.names = FALSE)
 
-## Return dataset after python operations.
+## Run py-growth-sales.ipynb
+## Reload dataset after python operations.
 ds <- read.csv("raw-data/ds_sales_to_r.csv",
     stringsAsFactors = FALSE, fileEncoding = "UTF-8"
 )
@@ -197,7 +203,7 @@ const_vars <- c(
     "inv", "fc", "divida", "cv", "tamanho", "alavanc",
     "caixa_normalizado", "dividendos_normalizado",
     "q_tobin", "cob_juros", "div_pl", "roa", "roe", "rok",
-    "divlp_at", "cv_industria"
+    "divlp_at", "cv_industria", "fcl_normalizado", "divonerosa_normalizado"
 )
 ds[, const_vars] <- winsorize_vars(ds, const_vars)
 
@@ -215,3 +221,11 @@ ds$dum_kz <- cons_dummy(ds, "kz")
 ds$dum_ww <- cons_dummy(ds, "ww")
 ds$dum_sa <- cons_dummy(ds, "sa")
 ds$dum_fcp <- cons_dummy(ds, "fcp")
+
+## Generate descriptive statistics.
+finvar_list <- c(
+    "epu", "inv", "fc", "divida", "cv", "caixa_normalizado",
+    "dividendos_normalizado", "tamanho", "q_tobin",
+    "cob_juros", "div_pl", "roa", "roe", "rok",
+    "divonerosa_normalizado", "fcl_normalizado"
+)

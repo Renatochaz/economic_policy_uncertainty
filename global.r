@@ -65,7 +65,7 @@ load_adjusted_data <- function(diffname, basename = "eco") {
 
     ## Round numeric values to two decimals.
     ds %>%
-      mutate(across(
+      dplyr::mutate(across(
         where(~ is.numeric(.)),
         list(~ round(., digits = 2))
       ))
@@ -86,7 +86,7 @@ clean_fin_data <- function(dataset, remove_na, replace_na) {
   dataset <- drop_na(dataset, all_of(remove_na))
 
   ## Replace NA to 0 from selected columns in replace_zero
-  dataset <- mutate(dataset, across(
+  dataset <- dplyr::mutate(dataset, across(
     all_of(replace_na), ~ ifelse(is.na(.x), 0, .x)
   ))
 
@@ -317,6 +317,8 @@ cons_finvars <- function(df) {
   vec_caixanorm <- cons_singlenorm(df, "caixa", "at")
   vec_divpagos_at <- cons_singlenorm(df, "dividendos", "at")
   vec_rok <- cons_singlenorm(df, "ll", "k")
+  vec_fcl <- cons_singlenorm(df, "fcl", "at")
+  vec_onerosa <- cons_singlenorm(df, "div_onerosa", "at")
 
   ## Subsetting skipped observations.
   df <- df[-c(vec_skips), ]
@@ -338,6 +340,8 @@ cons_finvars <- function(df) {
     df$roa <- (df$ll / df$at)
     df$roe <- (df$ll / df$pl)
     df$rok <- vec_rok
+    df$fcl_normalizado <- vec_fcl
+    df$divonerosa_normalizado <- vec_onerosa
   }
 
   return(df)
@@ -422,4 +426,55 @@ cons_dummy <- function(df, var) {
     }
   }
   return(newvar)
+}
+
+## Generate descriptive statistics with stargazer.
+## df = A dataset
+## varlist = A list of column names to generate the statistics.
+cons_descriptive <- function(df, varlist) {
+  df_temp <- subset(df, select = c(varlist))
+  stargazer(df_temp,
+    median = TRUE, digits = 4,
+    omit.summary.stat = c("p25", "p75", "min", "max")
+  )
+}
+
+## Frequency table constructor.
+## df: A dataframe.
+## var: The variable to create the frequency table.
+cons_freqtable <- function(df, var) {
+  freq_table <- dplyr::count(df, !!sym(var))
+  freq_table$perc <- plyr::round_any((
+    freq_table$n / sum(freq_table$n)) * 100, 0.0001, f = ceiling)
+
+  freq_table$accumulated_freq[1] <- freq_table$perc[1]
+
+  for (i in 2:nrow(freq_table)) {
+    freq_table$accumulated_freq[i] <- freq_table$accumulated_freq[i - 1] +
+      freq_table$perc[i]
+  }
+
+  freq_table$perc <- round(freq_table$perc, digits = 2)
+  freq_table$accumulated_freq <- round(
+    freq_table$accumulated_freq,
+    digits = 2
+  )
+
+  print(xtable(freq_table), type = "latex")
+}
+
+##
+cons_corrtable <- function(df, varlist) {
+  # Slice variables
+  slice <- df[, varlist]
+  fcorr <- round(cor(slice), 2)
+
+  # logical matrix for correlation triangulation
+  upper.tri(fcorr)
+
+  # hide upper triangle and importe to latex
+  upper <- fcorr
+  upper[upper.tri(fcorr)] <- ""
+  upper <- as.data.frame(upper)
+  print(xtable(upper), type = "latex")
 }
