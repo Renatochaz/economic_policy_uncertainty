@@ -222,10 +222,30 @@ ds$dum_ww <- cons_dummy(ds, "ww")
 ds$dum_sa <- cons_dummy(ds, "sa")
 ds$dum_fcp <- cons_dummy(ds, "fcp")
 
-## Generate descriptive statistics.
+## Generate var list to descriptive statistics.
 finvar_list <- c(
     "epu", "inv", "fc", "divida", "cv", "caixa_normalizado",
     "dividendos_normalizado", "tamanho", "q_tobin",
     "cob_juros", "div_pl", "roa", "roe", "rok",
     "divonerosa_normalizado", "fcl_normalizado"
 )
+
+## Genera descriptive tables
+cons_descriptive(ds, finvar_list)
+cons_descriptive(subset(ds, dum_kz == 1), finvar_list)
+cons_descriptive(subset(ds, dum_kz == 0), finvar_list)
+
+cons_descriptive(subset(ds, dum_ww == 1), finvar_list)
+cons_descriptive(subset(ds, dum_ww == 0), finvar_list)
+
+cons_descriptive(subset(ds, dum_sa == 1), finvar_list)
+cons_descriptive(subset(ds, dum_sa == 0), finvar_list)
+
+cons_descriptive(subset(ds, dum_fcp == 1), finvar_list)
+cons_descriptive(subset(ds, dum_fcp == 0), finvar_list)
+
+## Generate industrial distribution
+cons_freqtable(ds, "setor_economatica")
+
+## Generate correlation table
+cons_corrtable(ds, finvar_list)

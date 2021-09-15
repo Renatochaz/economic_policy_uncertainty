@@ -463,7 +463,9 @@ cons_freqtable <- function(df, var) {
   print(xtable(freq_table), type = "latex")
 }
 
-##
+## Correlation table constructor.
+## df: A dataframe.
+## varlist: Vector of variable to compute correlations.
 cons_corrtable <- function(df, varlist) {
   # Slice variables
   slice <- df[, varlist]
