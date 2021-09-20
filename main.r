@@ -203,7 +203,8 @@ const_vars <- c(
     "inv", "fc", "divida", "cv", "tamanho", "alavanc",
     "caixa_normalizado", "dividendos_normalizado",
     "q_tobin", "cob_juros", "div_pl", "roa", "roe", "rok",
-    "divlp_at", "cv_industria", "fcl_normalizado", "divonerosa_normalizado"
+    "divlp_at", "cv_industria", "fcl_normalizado", "divonerosa_normalizado",
+    "tx_vendas"
 )
 ds[, const_vars] <- winsorize_vars(ds, const_vars)
 
@@ -221,6 +222,9 @@ ds$dum_kz <- cons_dummy(ds, "kz")
 ds$dum_ww <- cons_dummy(ds, "ww")
 ds$dum_sa <- cons_dummy(ds, "sa")
 ds$dum_fcp <- cons_dummy(ds, "fcp")
+
+## Create dataset to python growth sales operation.
+write.csv(ds, "raw-data/py_macro.csv", row.names = FALSE)
 
 ## Generate var list to descriptive statistics.
 finvar_list <- c(

@@ -278,7 +278,7 @@ cons_norm <- function(df, var1, var2, var3, operator) {
 ## due to the use of defased operators
 ## df: A dataset.
 ## var1, var2: Variables to do the following operation:
-## [var1/ var3 (i - 1)]
+## [var1/ var2 (i - 1)]
 ## operator: An mathematical operator.
 cons_singlenorm <- function(df, var1, var2) {
   ## Set temporary vectors.
@@ -319,6 +319,7 @@ cons_finvars <- function(df) {
   vec_rok <- cons_singlenorm(df, "ll", "k")
   vec_fcl <- cons_singlenorm(df, "fcl", "at")
   vec_onerosa <- cons_singlenorm(df, "div_onerosa", "at")
+  vec_vendas <- cons_singlenorm(df, "v", "v")
 
   ## Subsetting skipped observations.
   df <- df[-c(vec_skips), ]
@@ -342,6 +343,7 @@ cons_finvars <- function(df) {
     df$rok <- vec_rok
     df$fcl_normalizado <- vec_fcl
     df$divonerosa_normalizado <- vec_onerosa
+    df$tx_vendas <- vec_vendas
   }
 
   return(df)
