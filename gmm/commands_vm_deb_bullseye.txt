@@ -21,12 +21,14 @@ crtl+a +d
 # kill screen
 screen -X -S gmm kill
 
+# download path
+/home/renato_ch/economic_policy_uncertainty/gmm/csv_results/
+
 ###
-source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_constrained_no_macro.r")
-source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_unconstrained_no_macro.r")
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_kz_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_kz_unconstrained_no_macro.r")
 
-source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_constrained_no_macro.r")
-source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_unconstrained_no_macro.r")
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_unconstrained_no_macro.r")
 
-source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_constrained_no_macro.r")
-source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_unconstrained_no_macro.r")
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_unconstrained_no_macro.r")
+
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_unconstrained_no_macro.r")

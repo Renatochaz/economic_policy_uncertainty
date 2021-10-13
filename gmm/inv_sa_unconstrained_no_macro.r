@@ -10,8 +10,8 @@ library("stringr")
 library("dplyr")
 
 # Set working directory.
-# setwd("/home/renatochaz/git/economic_policy_uncertainty")
-setwd("/home/renato_ch/economic_policy_uncertainty")
+setwd("/home/renatochaz/git/economic_policy_uncertainty")
+# setwd("/home/renato_ch/economic_policy_uncertainty")
 
 # Load data.
 ds <- read.csv("global.csv",
@@ -97,10 +97,10 @@ for (i in seq_len(nrow(mat_combs))) {
 
     results_temp <- data.frame(
         i,
-        unname(unlist(pvalues)[79]), unname(unlist(pvalues)[80]),
-        unname(unlist(pvalues)[81]), unname(unlist(pvalues)[82]),
-        unname(unlist(pvalues)[83]), unname(unlist(pvalues)[84]),
-        unname(unlist(pvalues)[85]), as.numeric(unname(unlist(sargan)[2])),
+        unname(unlist(pvalues)[22]), unname(unlist(pvalues)[23]),
+        unname(unlist(pvalues)[24]), unname(unlist(pvalues)[25]),
+        unname(unlist(pvalues)[26]), unname(unlist(pvalues)[27]),
+        unname(unlist(pvalues)[28]), as.numeric(unname(unlist(sargan)[2])),
         as.numeric(unname(unlist(m2)[2]))
     )
     colnames(results_temp) <- results_names

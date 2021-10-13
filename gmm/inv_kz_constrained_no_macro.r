@@ -10,8 +10,8 @@ library("stringr")
 library("dplyr")
 
 # Set working directory.
-# setwd("/home/renatochaz/git/economic_policy_uncertainty")
-setwd("/home/renato_ch/economic_policy_uncertainty")
+setwd("/home/renatochaz/git/economic_policy_uncertainty")
+# setwd("/home/renato_ch/economic_policy_uncertainty")
 
 # Load data.
 ds <- read.csv("global.csv",
@@ -75,7 +75,7 @@ results_names <- c(
 ptm <- proc.time()
 for (i in seq_len(nrow(mat_combs))) {
     model <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
-        ln_epu + fc + divida + cv + tamanho + setor_economatica |
+        ln_epu + fc + divida + cv + tamanho |
         stats:::lag(inv, mat_combs[i, 1]:mat_combs[i, 2]) +
             stats:::lag(sq_inv, 2:2) +
             stats:::lag(fc, 2:2) +
@@ -97,10 +97,10 @@ for (i in seq_len(nrow(mat_combs))) {
 
     results_temp <- data.frame(
         i,
-        unname(unlist(pvalues)[79]), unname(unlist(pvalues)[80]),
-        unname(unlist(pvalues)[81]), unname(unlist(pvalues)[82]),
-        unname(unlist(pvalues)[83]), unname(unlist(pvalues)[84]),
-        unname(unlist(pvalues)[85]), as.numeric(unname(unlist(sargan)[2])),
+        unname(unlist(pvalues)[22]), unname(unlist(pvalues)[23]),
+        unname(unlist(pvalues)[24]), unname(unlist(pvalues)[25]),
+        unname(unlist(pvalues)[26]), unname(unlist(pvalues)[27]),
+        unname(unlist(pvalues)[28]), as.numeric(unname(unlist(sargan)[2])),
         as.numeric(unname(unlist(m2)[2]))
     )
     colnames(results_temp) <- results_names

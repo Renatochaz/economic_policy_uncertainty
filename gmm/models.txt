@@ -1,2 +1,26 @@
 model_full_no_macro
 (3,6) inv (2,4) invSQ
+
+model_kz_constrained_no_macro
+(,) inv (,) invSQ
+
+model_kz_unconstrained_no_macro
+(,) inv (,) invSQ
+
+model_ww_constrained_no_macro
+(,) inv (,) invSQ
+
+model_ww_unconstrained_no_macro
+(,) inv (,) invSQ
+
+model_sa_constrained_no_macro
+(2,2) inv (2,4) invSQ
+
+model_sa_unconstrained_no_macro
+(2,2) inv (2,4) invSQ
+
+model_fcp_constrained_no_macro
+(,) inv (,) invSQ
+
+model_fcp_unconstrained_no_macro
+(,) inv (,) invSQ
