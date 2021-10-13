@@ -9,6 +9,7 @@ library("miscTools")
 library("stringr")
 library("dplyr")
 
+get(dummy)
 # Set working directory.
 # setwd("/home/renatochaz/git/economic_policy_uncertainty")
 setwd("/home/renato_ch/economic_policy_uncertainty")
@@ -30,13 +31,12 @@ ds <- pdata.frame(ds, index = c("codigo", "ano"))
 # Generate list of combinations of the model instruments
 # Only to find best investment lags
 combs <- c(
-    "0,0", "0,1", "0,2", "0,3", "0,4", "0,5", "0,6", "0,7", "0,8", "0,9",
-    "1,1", "1,2", "1,3", "1,4", "1,5", "1,6", "1,7", "1,8", "1,9",
-    "2,2", "2,3", "2,4", "2,5", "2,6", "2,7", "2,8", "2,9",
-    "3,3", "3,4", "3,5", "3,6", "3,7", "3,8", "3,9"
+    "0,0", "0,1", "0,2", "0,9",
+    "1,1", "1,2", "1,9",
+    "2,2", "2,9"
 )
 
-n <- 2
+n <- 4
 l <- rep(list(combs), n)
 combinations <- expand.grid(l)
 
@@ -76,12 +76,12 @@ ptm <- proc.time()
 for (i in seq_len(nrow(mat_combs))) {
     model <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
         ln_epu + fc + divida + cv + tamanho + setor_economatica |
-        stats:::lag(inv, mat_combs[i, 1]:mat_combs[i, 2]) +
-            stats:::lag(sq_inv, 2:2) +
-            stats:::lag(fc, 2:2) +
-            stats:::lag(divida, 2:2) +
-            stats:::lag(cv, 2:2) +
-            stats:::lag(tamanho, 2:2),
+        stats:::lag(inv, 3:6) +
+            stats:::lag(sq_inv, 2:4) +
+            stats:::lag(fc, mat_combs[i, 1]:mat_combs[i, 2]) +
+            stats:::lag(divida, mat_combs[i, 3]:mat_combs[i, 4]) +
+            stats:::lag(cv, mat_combs[i, 5]:mat_combs[i, 6]) +
+            stats:::lag(tamanho, mat_combs[i, 7]:mat_combs[i, 8]),
     data = ds,
     effect = "individual",
     model = "twosteps",

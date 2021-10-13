@@ -1,7 +1,7 @@
 # Configure conditions.
-savename <- "inv_kz_constrainend_no_macro"
+savename <- "inv_kz_unconstrainend_no_macro"
 dummy <- "dum_kz"
-constraint <- "1"
+constraint <- "0"
 
 # Load dependencies.
 library("plm")
