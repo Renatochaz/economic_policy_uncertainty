@@ -5,14 +5,12 @@ sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
 
 sudo apt-get install r-base r-base-dev libatlas3-base libopenblas-base screen -y
 
-
 sudo su - -c "R -e \"install.packages('plm')\""
 sudo su - -c "R -e \"install.packages('miscTools')\""
 sudo su - -c "R -e \"install.packages('stringr')\""
 sudo su - -c "R -e \"install.packages('dplyr')\""
 
 sudo R
-
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_full_no_macro.r")
 
 # create screen
