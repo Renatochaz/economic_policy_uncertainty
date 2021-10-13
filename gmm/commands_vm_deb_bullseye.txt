@@ -14,3 +14,12 @@ sudo su - -c "R -e \"install.packages('dplyr')\""
 sudo R
 
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_full_no_macro.r")
+
+# create screen
+screen -S name
+
+# exit screen
+crtl+a +d
+
+# kill screen
+screen -X -S id kill
