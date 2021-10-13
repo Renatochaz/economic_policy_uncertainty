@@ -1,5 +1,5 @@
 # Configure conditions.
-savename <- "inv_kz_unconstrainend_no_macro"
+savename <- "inv_kz_unconstrained_no_macro"
 dummy <- "dum_kz"
 constraint <- "0"
 
@@ -75,10 +75,11 @@ results_names <- c(
 ptm <- proc.time()
 for (i in seq_len(nrow(mat_combs))) {
     model <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
-        ln_epu + fc + divida + cv + tamanho + setor_economatica |
-        stats:::lag(inv, mat_combs[i, 1]:mat_combs[i, 2]) +
+        ln_epu + fcl_normalizado + divida + cv + tamanho |
+        stats:::lag(inv, mat_combs[2, 1]:mat_combs[2, 2]) +
+            stats:::lag(sq_inv, mat_combs[i, 3]:mat_combs[i, 4]) +
             stats:::lag(sq_inv, 2:2) +
-            stats:::lag(fc, 2:2) +
+            stats:::lag(fcl_normalizado, 2:2) +
             stats:::lag(divida, 2:2) +
             stats:::lag(cv, 2:2) +
             stats:::lag(tamanho, 2:2),
@@ -97,10 +98,10 @@ for (i in seq_len(nrow(mat_combs))) {
 
     results_temp <- data.frame(
         i,
-        unname(unlist(pvalues)[79]), unname(unlist(pvalues)[80]),
-        unname(unlist(pvalues)[81]), unname(unlist(pvalues)[82]),
-        unname(unlist(pvalues)[83]), unname(unlist(pvalues)[84]),
-        unname(unlist(pvalues)[85]), as.numeric(unname(unlist(sargan)[2])),
+        unname(unlist(pvalues)[22]), unname(unlist(pvalues)[23]),
+        unname(unlist(pvalues)[24]), unname(unlist(pvalues)[25]),
+        unname(unlist(pvalues)[26]), unname(unlist(pvalues)[27]),
+        unname(unlist(pvalues)[28]), as.numeric(unname(unlist(sargan)[2])),
         as.numeric(unname(unlist(m2)[2]))
     )
     colnames(results_temp) <- results_names

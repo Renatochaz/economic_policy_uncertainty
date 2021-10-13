@@ -1,5 +1,5 @@
 # Configure conditions.
-savename <- "inv_sa_unconstrainend_no_macro"
+savename <- "inv_sa_unconstrained_no_macro"
 dummy <- "dum_sa"
 constraint <- "0"
 
@@ -10,8 +10,8 @@ library("stringr")
 library("dplyr")
 
 # Set working directory.
-setwd("/home/renatochaz/git/economic_policy_uncertainty")
-# setwd("/home/renato_ch/economic_policy_uncertainty")
+# setwd("/home/renatochaz/git/economic_policy_uncertainty")
+setwd("/home/renato_ch/economic_policy_uncertainty")
 
 # Load data.
 ds <- read.csv("global.csv",
@@ -75,10 +75,11 @@ results_names <- c(
 ptm <- proc.time()
 for (i in seq_len(nrow(mat_combs))) {
     model <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
-        ln_epu + fc + divida + cv + tamanho |
+        ln_epu + fcl_normalizado + divida + cv + tamanho |
         stats:::lag(inv, mat_combs[i, 1]:mat_combs[i, 2]) +
+            stats:::lag(sq_inv, mat_combs[i, 3]:mat_combs[i, 4]) +
             stats:::lag(sq_inv, 2:2) +
-            stats:::lag(fc, 2:2) +
+            stats:::lag(fcl_normalizado, 2:2) +
             stats:::lag(divida, 2:2) +
             stats:::lag(cv, 2:2) +
             stats:::lag(tamanho, 2:2),
