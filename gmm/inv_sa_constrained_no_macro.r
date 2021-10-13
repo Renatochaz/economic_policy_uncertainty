@@ -75,7 +75,7 @@ results_names <- c(
 ptm <- proc.time()
 for (i in seq_len(nrow(mat_combs))) {
     model <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
-        ln_epu + fc + divida + cv + tamanho + setor_economatica |
+        ln_epu + fc + divida + cv + tamanho |
         stats:::lag(inv, mat_combs[i, 1]:mat_combs[i, 2]) +
             stats:::lag(sq_inv, 2:2) +
             stats:::lag(fc, 2:2) +

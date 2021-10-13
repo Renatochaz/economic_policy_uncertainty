@@ -1,9 +1,8 @@
 sudo apt-get update
 sudo apt-get upgrade -y
+sudo apt-get install r-base r-base-dev libatlas3-base libopenblas-base screen -y
 sudo apt-get install git -y
 sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
-
-sudo apt-get install r-base r-base-dev libatlas3-base libopenblas-base screen -y
 
 sudo su - -c "R -e \"install.packages('plm')\""
 sudo su - -c "R -e \"install.packages('miscTools')\""
@@ -14,10 +13,20 @@ sudo R
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_full_no_macro.r")
 
 # create screen
-screen -S name
+screen -S gmm
 
 # exit screen
 crtl+a +d
 
 # kill screen
-screen -X -S id kill
+screen -X -S gmm kill
+
+###
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_constrained_no_macro.r")
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_unconstrained_no_macro.r")
+
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_constrained_no_macro.r")
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_unconstrained_no_macro.r")
+
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_constrained_no_macro.r")
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_unconstrained_no_macro.r")
