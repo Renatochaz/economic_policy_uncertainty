@@ -9,8 +9,6 @@ sudo su - -c "R -e \"install.packages('miscTools')\""
 sudo su - -c "R -e \"install.packages('stringr')\""
 sudo su - -c "R -e \"install.packages('dplyr')\""
 
-sudo R
-source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_full_no_macro.r")
 
 # create screen
 screen -S gmm
@@ -24,7 +22,14 @@ screen -X -S gmm kill
 # download path
 /home/renato_ch/economic_policy_uncertainty/gmm/csv_results/
 
+# remove reclone
+sudo rm -r economic_policy_uncertainty
+sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
+
+
 ###
+source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_full_no_macro.r")
+
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_kz_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_kz_unconstrained_no_macro.r")
 
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_unconstrained_no_macro.r")
@@ -32,3 +37,14 @@ source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_ww_constrained_no_ma
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_sa_unconstrained_no_macro.r")
 
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_fcp_unconstrained_no_macro.r")
+
+# Download vm files
+gcloud compute scp gmm-1:~/economic_policy_uncertainty/gmm/csv_results/inv_full_no_macro.csv gmm/inv_full_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/gmm/csv_results/inv_kz_constrained_no_macro.csv gmm/inv_kz_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/gmm/csv_results/inv_kz_unconstrained_no_macro.csv gmm/inv_kz_unconstrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/gmm/csv_results/inv_ww_constrained_no_macro.csv gmm/inv_ww_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/gmm/csv_results/inv_ww_unconstrained_no_macro.csv gmm/inv_ww_unconstrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/gmm/csv_results/inv_sa_constrained_no_macro.csv gmm/inv_sa_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/gmm/csv_results/inv_sa_unconstrained_no_macro.csv gmm/inv_sa_unconstrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/inv_fcp_constrained_no_macro.csv gmm/inv_fcp_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/inv_fcp_unconstrained_no_macro.csv gmm/inv_fcp_unconstrained_no_macro.csv --zone=us-central1-c

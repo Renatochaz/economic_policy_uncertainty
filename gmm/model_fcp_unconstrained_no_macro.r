@@ -1,5 +1,8 @@
-savename <- "model_full_no_macro"
-inv_lags <- c(3, 4, 0, 0)
+# Configure conditions.
+savename <- "model_fcp_unconstrained_no_macro"
+dummy <- "dum_fcp"
+constraint <- "0"
+inv_lags <- c(0, 0, 2, 2)
 
 # Load dependencies.
 library("plm")
@@ -18,6 +21,9 @@ ds <- read.csv("global.csv",
 
 # Compute squared investment.
 ds$sq_inv <- ds$inv * ds$inv
+
+# Filter dataframe
+ds <- subset(ds, get(dummy) == constraint)
 
 # Set dataframe with definied panel indexes.
 ds <- pdata.frame(ds, index = c("codigo", "ano"))
@@ -50,6 +56,7 @@ for (i in seq_len(ncol(combinations))) {
 # Convert matrix to data frame
 mat_combs <- data.frame(mat_combs)
 colnames(mat_combs) <- c(seq_len(ncol(mat_combs)))
+
 
 # Set a df for computed results.
 results_df <- data.frame(

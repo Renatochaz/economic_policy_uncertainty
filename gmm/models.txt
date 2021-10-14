@@ -1,26 +1,26 @@
-model_full_no_macro
-(3,6) inv (2,4) invSQ
+model_full_no_macro (29)
+(3,4) inv (0,0) invSQ
 
-model_kz_constrained_no_macro
-(,) inv (,) invSQ
+model_kz_constrained_no_macro (920)
+(0,1) inv (3,3) invSQ
 
-model_kz_unconstrained_no_macro
-(,) inv (,) invSQ
+model_kz_unconstrained_no_macro (666)
+(2,2) inv (2,2) invSQ
 
-model_ww_constrained_no_macro
-(,) inv (,) invSQ
+model_ww_constrained_no_macro (647)
+(0,0) inv (2,2) invSQ
 
-model_ww_unconstrained_no_macro
-(,) inv (,) invSQ
+model_ww_unconstrained_no_macro (666)
+(2,2) inv (2,2) invSQ
 
-model_sa_constrained_no_macro
-(2,2) inv (2,4) invSQ
+model_sa_constrained_no_macro (674)
+(3,3) inv (2,2) invSQ
 
-model_sa_unconstrained_no_macro
-(2,2) inv (2,4) invSQ
+model_sa_unconstrained_no_macro (657)
+(1,1) inv (2,2) invSQ
 
-model_fcp_constrained_no_macro
-(,) inv (,) invSQ
+model_fcp_constrained_no_macro (700)
+(2,2) inv (2,3) invSQ
 
-model_fcp_unconstrained_no_macro
-(,) inv (,) invSQ
+model_fcp_unconstrained_no_macro (647)
+(0,0) inv (2,2) invSQ
