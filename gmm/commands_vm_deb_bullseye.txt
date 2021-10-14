@@ -27,7 +27,7 @@ sudo rm -r economic_policy_uncertainty
 sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
 
 
-###
+### inv model
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_full_no_macro.r")
 
 source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_kz_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/inv_kz_unconstrained_no_macro.r")
@@ -48,3 +48,14 @@ gcloud compute scp gmm-4:~/economic_policy_uncertainty/gmm/csv_results/inv_sa_co
 gcloud compute scp gmm-4:~/economic_policy_uncertainty/gmm/csv_results/inv_sa_unconstrained_no_macro.csv gmm/inv_sa_unconstrained_no_macro.csv --zone=us-central1-c
 gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/inv_fcp_constrained_no_macro.csv gmm/inv_fcp_constrained_no_macro.csv --zone=us-central1-c
 gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/inv_fcp_unconstrained_no_macro.csv gmm/inv_fcp_unconstrained_no_macro.csv --zone=us-central1-c
+
+### model no macro
+source("/home/renato_ch/economic_policy_uncertainty/gmm/model_full_no_macro.r")
+
+source("/home/renato_ch/economic_policy_uncertainty/gmm/model_kz_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/model_kz_unconstrained_no_macro.r")
+
+source("/home/renato_ch/economic_policy_uncertainty/gmm/model_ww_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/model_ww_unconstrained_no_macro.r")
+
+source("/home/renato_ch/economic_policy_uncertainty/gmm/model_sa_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/model_sa_unconstrained_no_macro.r")
+
+source("/home/renato_ch/economic_policy_uncertainty/gmm/model_fcp_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/model_fcp_unconstrained_no_macro.r")
