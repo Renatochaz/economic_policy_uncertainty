@@ -59,3 +59,14 @@ source("/home/renato_ch/economic_policy_uncertainty/gmm/model_ww_constrained_no_
 source("/home/renato_ch/economic_policy_uncertainty/gmm/model_sa_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/model_sa_unconstrained_no_macro.r")
 
 source("/home/renato_ch/economic_policy_uncertainty/gmm/model_fcp_constrained_no_macro.r"); source("/home/renato_ch/economic_policy_uncertainty/gmm/model_fcp_unconstrained_no_macro.r")
+
+# Download vm files
+gcloud compute scp gmm-1:~/economic_policy_uncertainty/gmm/csv_results/model_full_no_macro.csv gmm/model_no_macro/model_full_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/gmm/csv_results/model_kz_constrained_no_macro.csv gmm/model_no_macro/model_kz_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/gmm/csv_results/model_kz_unconstrained_no_macro.csv gmm/model_no_macro/model_kz_unconstrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/gmm/csv_results/model_ww_constrained_no_macro.csv gmm/model_no_macro/model_ww_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/gmm/csv_results/model_ww_unconstrained_no_macro.csv gmm/model_no_macro/model_ww_unconstrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/gmm/csv_results/model_sa_constrained_no_macro.csv gmm/model_no_macro/model_sa_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/gmm/csv_results/model_sa_unconstrained_no_macro.csv gmm/model_no_macro/model_sa_unconstrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/model_fcp_constrained_no_macro.csv gmm/model_no_macro/model_fcp_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/model_fcp_unconstrained_no_macro.csv gmm/model_no_macro/model_fcp_unconstrained_no_macro.csv --zone=us-central1-c

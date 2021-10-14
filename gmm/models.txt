@@ -1,26 +1,26 @@
-model_full_no_macro (29)
-(3,4) inv (0,0) invSQ
+model_full_no_macro (29) (4932)
+(3,4) inv (0,0) invSQ (2,9) fc (2,2) divida (1,9) cv (1,9) tamanho
 
-model_kz_constrained_no_macro (920)
-(0,1) inv (3,3) invSQ
+model_kz_constrained_no_macro (920) (71)
+(0,1) inv (3,3) invSQ (2,2) fc (2,2) divida (0,0) cv (0,0) tamanho
 
-model_kz_unconstrained_no_macro (666)
+model_kz_unconstrained_no_macro (666) (no models)
 (2,2) inv (2,2) invSQ
 
-model_ww_constrained_no_macro (647)
-(0,0) inv (2,2) invSQ
+model_ww_constrained_no_macro (647) (4013)
+(0,0) inv (2,2) invSQ (2,2) fc (1,1) divida (1,1) cv (1,2) tamanho
 
-model_ww_unconstrained_no_macro (666)
-(2,2) inv (2,2) invSQ
+model_ww_unconstrained_no_macro (666) (5738/no model)
+(2,2) inv (2,2) invSQ (1,1) fc (0,9) divida (0,9) cv (2,2) tamanho
 
-model_sa_constrained_no_macro (674)
-(3,3) inv (2,2) invSQ
+model_sa_constrained_no_macro (674) (770) 
+(3,3) inv (2,2) invSQ (1,1) fc (1,1) divida (0,0) cv (0,1) tamanho
 
-model_sa_unconstrained_no_macro (657)
-(1,1) inv (2,2) invSQ
+model_sa_unconstrained_no_macro (657) (638)
+(1,1) inv (2,2) invSQ (2,2) fc (2,2) divida (2,2) cv (0,0) tamanho
 
-model_fcp_constrained_no_macro (700)
-(2,2) inv (2,3) invSQ
+model_fcp_constrained_no_macro (700) (3248 /no model)
+(2,2) inv (2,3) invSQ (2,2) fc (0,0) divida (1,1) cv (1,1) tamanho
 
-model_fcp_unconstrained_no_macro (647)
-(0,0) inv (2,2) invSQ
+model_fcp_unconstrained_no_macro (647) (37)
+(0,0) inv (2,2) invSQ (0,0) fc (1,1) divida (0,0) cv (0,0) tamanho
