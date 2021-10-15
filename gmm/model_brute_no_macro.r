@@ -24,19 +24,18 @@ ds$sq_inv <- ds$inv * ds$inv
 # Filter dataframe
 ds <- subset(ds, get(dummy) == constraint)
 
+## Removing firm-data with less than four sequential years of data.
+ds <- filter_seq(ds, ds$ano, 4)
+
 # Set dataframe with definied panel indexes.
 ds <- pdata.frame(ds, index = c("codigo", "ano"))
 
 # Generate list of combinations of the model instruments
-# Only to find best investment lags
 combs <- c(
-    "0,0", "0,1", "0,2", "0,3", "0,4", "0,5", "0,6", "0,7", "0,8", "0,9",
-    "1,1", "1,2", "1,3", "1,4", "1,5", "1,6", "1,7", "1,8", "1,9",
-    "2,2", "2,3", "2,4", "2,5", "2,6", "2,7", "2,8", "2,9",
-    "3,3", "3,4", "3,5", "3,6", "3,7", "3,8", "3,9"
+    "0,0", "1,1", "2,2", "2,9", "0,9"
 )
 
-n <- 2
+n <- 4
 l <- rep(list(combs), n)
 combinations <- expand.grid(l)
 
@@ -57,6 +56,43 @@ for (i in seq_len(ncol(combinations))) {
 mat_combs <- data.frame(mat_combs)
 colnames(mat_combs) <- c(seq_len(ncol(mat_combs)))
 
+# Generate list of combinations of the model instruments
+lags <- c(
+    "0,0", "1,1", "2,2", "0,9", "1,9", "2,9"
+)
+
+n <- 2
+l <- rep(list(lags), n)
+lag_combs <- expand.grid(l)
+
+# Initialize empty matrix
+mat_lags <- matrix(, nrow = nrow(lag_combs), ncol = 0)
+
+# Convert char combinations to numeric dataframe
+for (i in seq_len(ncol(lag_combs))) {
+    seq_combs <- as.character(lag_combs[, i])
+
+    first_seq <- as.numeric(str_extract(seq_combs, "^\\d")) # Matchs first char
+    second_seq <- as.numeric(str_extract(seq_combs, "\\d$")) # Matchs last char
+
+    mat_lags <- cbind(mat_lags, first_seq, second_seq)
+}
+
+# Convert matrix to data frame
+mat_lags <- data.frame(mat_lags)
+colnames(mat_lags) <- c(seq_len(ncol(mat_lags)))
+
+# Dynamically repeat mat_lags
+n <- nrow(mat_lags)
+mat_lags <- mat_lags %>% slice(rep(1:n(), each = nrow(mat_combs)))
+
+# Dinamically expand mat_combs
+mat_combs <- mat_combs[rep(seq_len(nrow(mat_combs)), n), ]
+rownames(mat_combs) <- NULL
+
+# Bind dataframes together
+mat_combs <- cbind(mat_lags, mat_combs)
+colnames(mat_combs) <- seq_len(ncol(mat_combs))
 
 # Set a df for computed results.
 results_df <- data.frame(
@@ -78,10 +114,10 @@ for (i in seq_len(nrow(mat_combs))) {
         ln_epu + fcl_normalizado + divida + cv + tamanho |
         stats:::lag(inv, mat_combs[i, 1]:mat_combs[i, 2]) +
             stats:::lag(sq_inv, mat_combs[i, 3]:mat_combs[i, 4]) +
-            stats:::lag(fcl_normalizado, 2:2) +
-            stats:::lag(divida, 2:2) +
-            stats:::lag(cv, 2:2) +
-            stats:::lag(tamanho, 2:2),
+            stats:::lag(fcl_normalizado, mat_combs[i, 5]:mat_combs[i, 6]) +
+            stats:::lag(divida, mat_combs[i, 7]:mat_combs[i, 8]) +
+            stats:::lag(cv, mat_combs[i, 9]:mat_combs[i, 10]) +
+            stats:::lag(tamanho, mat_combs[i, 11]:mat_combs[i, 12]),
     data = ds,
     effect = "individual",
     model = "twosteps",
