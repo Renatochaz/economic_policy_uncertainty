@@ -1,8 +1,3 @@
-# Configure conditions.
-savename <- "brute_kz_unconstrained_no_macro"
-dummy <- "dum_kz"
-constraint <- "0"
-
 # Load dependencies.
 library("plm")
 library("miscTools")
@@ -24,7 +19,9 @@ ds <- read.csv("global.csv",
 ds$sq_inv <- ds$inv * ds$inv
 
 # Filter dataframe
-ds <- subset(ds, get(dummy) == constraint)
+if (full == "yes") {
+    ds <- subset(ds, get(dummy) == constraint)
+}
 
 ## Removing firm-data with less than four sequential years of data.
 ds <- filter_seq(ds, ds$ano, 4)
@@ -34,7 +31,7 @@ ds <- pdata.frame(ds, index = c("codigo", "ano"))
 
 # Generate list of combinations of the model instruments
 combs <- c(
-    "0,0", "1,1", "2,2", "2,9", "0,9"
+    "0,9", "1,9", "2,9", "3,9", "1,1", "2,2"
 )
 
 n <- 4
@@ -60,7 +57,7 @@ colnames(mat_combs) <- c(seq_len(ncol(mat_combs)))
 
 # Generate list of combinations of the model instruments
 lags <- c(
-    "0,0", "1,1", "2,2", "0,9", "1,9", "2,9"
+    "0,0", "1,1", "2,2"
 )
 
 n <- 2
@@ -123,7 +120,7 @@ for (i in seq_len(nrow(mat_combs))) {
     data = ds,
     effect = "individual",
     model = "twosteps",
-    collapse = FALSE,
+    collapse = TRUE,
     transformation = "ld",
     fsm = "full",
     )
@@ -150,6 +147,6 @@ for (i in seq_len(nrow(mat_combs))) {
 
 ## Create dataset to analyze in graphical environment.
 write.csv(results_df,
-    paste0("gmm/csv_results/", savename, ".csv"),
+    paste0("gmm/csv_results/brute_no_macro", savename, ".csv"),
     row.names = FALSE
 )
