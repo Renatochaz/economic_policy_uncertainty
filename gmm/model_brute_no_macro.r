@@ -1,5 +1,5 @@
 # Configure conditions.
-savename <- "inv_kz_unconstrained_no_macro"
+savename <- "brute_kz_unconstrained_no_macro"
 dummy <- "dum_kz"
 constraint <- "0"
 
