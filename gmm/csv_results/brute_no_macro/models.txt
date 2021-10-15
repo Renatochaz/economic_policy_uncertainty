@@ -1,3 +1,5 @@
+full model
+
 kz unconstrained
 (0,0) inv (2,2) invSQ (3,9) fc (0,9) divida (2,9) cv (3,9) tamanho
 8500
