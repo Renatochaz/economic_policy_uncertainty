@@ -13,6 +13,8 @@ library("dplyr")
 # setwd("/home/renatochaz/git/economic_policy_uncertainty")
 setwd("/home/renato_ch/economic_policy_uncertainty")
 
+source("global.r")
+
 # Load data.
 ds <- read.csv("global.csv",
     stringsAsFactors = FALSE, fileEncoding = "UTF-8"
