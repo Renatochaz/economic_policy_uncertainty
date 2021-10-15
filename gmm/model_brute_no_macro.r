@@ -4,6 +4,7 @@ library("miscTools")
 library("stringr")
 library("dplyr")
 
+
 # Set working directory.
 # setwd("/home/renatochaz/git/economic_policy_uncertainty")
 setwd("/home/renato_ch/economic_policy_uncertainty")
@@ -19,12 +20,11 @@ ds <- read.csv("global.csv",
 ds$sq_inv <- ds$inv * ds$inv
 
 # Filter dataframe
-if (full == "yes") {
+if (full == "no") {
     ds <- subset(ds, get(dummy) == constraint)
+    ## Removing firm-data with less than four sequential years of data.
+    ds <- filter_seq(ds, ds$ano, 4)
 }
-
-## Removing firm-data with less than four sequential years of data.
-ds <- filter_seq(ds, ds$ano, 4)
 
 # Set dataframe with definied panel indexes.
 ds <- pdata.frame(ds, index = c("codigo", "ano"))
