@@ -73,8 +73,16 @@ gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/model_fcp
 
 
 ### model brute
-savename <- "brute_kz_unconstrained_no_macro"
-dummy <- "dum_kz"
-constraint <- "0"
+sudo rm -r economic_policy_uncertainty
+sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
+
+savename <- "fcp_constrained_no_macro"
+dummy <- "dum_fcp"
+constraint <- "1"
 full = "no"
 source("/home/renato_ch/economic_policy_uncertainty/gmm/model_brute_no_macro.r")
+
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/gmm/csv_results/brute_no_macrokz_constrained_no_macro.csv gmm/brute_no_macro/kz_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/gmm/csv_results/brute_no_macroww_constrained_no_macro.csv gmm/brute_no_macro/ww_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/gmm/csv_results/brute_no_macrosa_constrained_no_macro.csv gmm/brute_no_macro/sa_constrained_no_macro.csv --zone=us-central1-c
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/gmm/csv_results/brute_no_macrofcp_constrained_no_macro.csv gmm/brute_no_macro/fcp_constrained_no_macro.csv --zone=us-central1-c

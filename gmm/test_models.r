@@ -1,18 +1,20 @@
 # Configure conditions.
-subset <- "no"
-dummy <- "dum_kz"
-constraint <- "1"
+full <- "yes"
+dummy <- "dum_fcp"
+constraint <- "0"
+colapp <- FALSE
 model_lags <- c(
     3, 4,
+    0, 0,
     2, 9,
     2, 2,
-    1, 9,
     1, 9,
     1, 9
 )
 
 # Load dependencies.
 library("plm")
+source("global.r")
 
 # Set working directory.
 setwd("/home/renatochaz/git/economic_policy_uncertainty")
@@ -29,8 +31,11 @@ ds$sq_inv <- ds$inv * ds$inv
 ds <- pdata.frame(ds, index = c("codigo", "ano"))
 
 
-if (subset == "yes") {
+# Filter dataframe
+if (full == "no") {
     ds <- subset(ds, get(dummy) == constraint)
+    ## Removing firm-data with less than four sequential years of data.
+    ds <- filter_seq(ds, ds$ano, 4)
 }
 
 model <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
@@ -44,7 +49,7 @@ model <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
 data = ds,
 effect = "individual",
 model = "twosteps",
-collapse = FALSE,
+collapse = colapp,
 transformation = "ld",
 fsm = "full",
 )
