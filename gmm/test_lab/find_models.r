@@ -7,13 +7,13 @@ setwd("/home/renatochaz/git/economic_policy_uncertainty")
 # Pass configs
 rm(list = ls())
 source("global.r")
-collapse <- "no_collapse"
+collapse <- "collapse"
 obs <- 1
 
 filename <- c(
-    "model_full_no_macro"
-    # "kz_constrained_no_macro", "kz_unconstrained_no_macro"
-    # "ww_constrained_no_macro", "ww_unconstrained_no_macro",
+    # "model_full_no_macro"
+    "kz_constrained_no_macro", "kz_unconstrained_no_macro"
+    # "ww_constrained_no_macro", "ww_unconstrained_no_macro"
     # "sa_constrained_no_macro", "sa_unconstrained_no_macro"
 )
 
