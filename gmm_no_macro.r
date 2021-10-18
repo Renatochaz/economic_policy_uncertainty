@@ -3,6 +3,7 @@ library("plm")
 library("miscTools")
 library("stringr")
 library("dplyr")
+library("texreg")
 rm(list = ls())
 
 # Set working directory.
@@ -131,3 +132,8 @@ collapse = TRUE,
 transformation = "ld",
 fsm = "full",
 )
+
+
+
+### Latex formato
+textreg(m1)
