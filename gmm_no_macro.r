@@ -95,6 +95,24 @@ transformation = "ld",
 fsm = "full",
 )
 
+## WW unconstrained.
+ww_un <- subset(ds, dum_ww == 0)
+m5 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
+    ln_epu + fcl_normalizado + divida + cv + tamanho |
+    stats:::lag(inv, 1:9) +
+        stats:::lag(sq_inv, 1:1) +
+        stats:::lag(fcl_normalizado, 2:2) +
+        stats:::lag(divida, 1:1) +
+        stats:::lag(cv, 3:9) +
+        stats:::lag(tamanho, 1:9),
+data = ww_un,
+effect = "individual",
+model = "twosteps",
+collapse = TRUE,
+transformation = "ld",
+fsm = "full",
+)
+
 # SA constrained
 sa_con <- subset(ds, dum_sa == 1)
 sa_con <- filter_seq(sa_con, sa_con$ano, 4)
