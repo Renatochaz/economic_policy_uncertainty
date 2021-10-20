@@ -1,0 +1,28 @@
+full
+(filter: no) (collapse: no)
+model 76 (combs_basic)
+base inv: (3, 4) (0, 0)
+
+kz constrained
+(filter: yes) (collapse: yes)
+model 21550 (brute_force)
+
+kz unconstrained
+(filter: yes) (collapses: yes)
+model 37148 (brute_force)
+
+ww constrained
+(filter: yes) (collapse: yes)
+model 94275 (brute_force)
+
+ww unconstrained
+(filter: no) (collapse: yes)
+model 41711 (brute_force)
+
+sa constrained
+(filter: yes) (collapse: no)
+model 198  (combs_sa)
+
+sa unconstrained
+(filter: yes) (collapse: yes)
+model 85621 (brute_force)
