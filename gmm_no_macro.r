@@ -336,18 +336,26 @@ arbond <- c(
 ### Latex format
 
 # Pass parameters.
-models <- list(
-    tex_m1, tex_m2, tex_m3,
+models_first <- list(
+    tex_m1, tex_m2, tex_m3
+)
+
+models_second <- list(
     tex_m4, tex_m5, tex_m6, tex_m7
 )
 
-label <- list("teste" = 1)
+
+label <- list("Amostra completa" = 1, "Índice KZ" = 2:3)
+label_2 <- list("Índice WW" = 1:2, "Índice SA" = 3:4)
 
 model_names <- c(
-    "FULL",
-    "1", "2",
-    "3", "4",
-    "5", "6"
+    "Amostra completa",
+    "Restrito", "Não restrito"
+)
+
+model_names_2 <- c(
+    "Restrito", "Não restrito",
+    "Restrito", "Não restrito"
 )
 
 var_names <- c(
@@ -360,18 +368,21 @@ var_names <- c(
     "$TAM$"
 )
 custom_gofs <- list(
-    "Observações" = obs,
-    "m2(p-valor)" = arbond,
-    "Sargan (p-valor)" = sargan
+    "Observações" = obs[1:3],
+    "m2(p-valor)" = arbond[1:3],
+    "Sargan (p-valor)" = sargan[1:3]
 )
 
-custom_caption <- "TESTE CAPTION TESTE"
-custom_label <- "TABLE LABEL NAME"
-custom_scale <- 0.8
+custom_gofs_2 <- list(
+    "Observações" = obs[4:7],
+    "m2(p-valor)" = arbond[4:7],
+    "Sargan (p-valor)" = sargan[4:7]
+)
 
-# Compute latex output
+
+# Compute latex output for first model
 texreg(
-    models,
+    models_first,
     single.row = FALSE,
     stars = c(0.01, 0.05, 0.1),
     custom.header = label,
@@ -380,12 +391,31 @@ texreg(
     custom.note = "",
     digits = 3,
     custom.gof.rows = custom_gofs,
-    caption = custom_caption,
-    label = custom_label,
+    caption = FALSE,
     center = FALSE,
     booktabs = TRUE,
-    dcolumn = TRUE,
-    table = TRUE,
-    caption.above = TRUE,
-    scalebox = custom_scale
+    dcolumn = FALSE,
+    siunitx = FALSE,
+    table = FALSE,
+    use.packages = FALSE
+)
+
+# Compute latex output for second model
+texreg(
+    models_second,
+    single.row = FALSE,
+    stars = c(0.01, 0.05, 0.1),
+    custom.header = label_2,
+    custom.model.names = model_names_2,
+    custom.coef.names = var_names,
+    custom.note = "",
+    digits = 3,
+    custom.gof.rows = custom_gofs_2,
+    caption = FALSE,
+    center = FALSE,
+    booktabs = TRUE,
+    dcolumn = FALSE,
+    siunitx = FALSE,
+    table = FALSE,
+    use.packages = FALSE
 )
