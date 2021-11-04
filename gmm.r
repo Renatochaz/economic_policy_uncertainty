@@ -157,97 +157,10 @@ arbond <- c(
     )
 )
 
-# WW constrained.
-ww_con <- subset(ds, dum_ww == 1)
-ww_con <- filter_seq(ww_con, ww_con$ano, 4)
-m4 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
-    ln_epu + fcl_normalizado + divida + cv + tamanho |
-    stats:::lag(inv, 2:9) +
-        stats:::lag(sq_inv, 0:9) +
-        stats:::lag(fcl_normalizado, 2:9) +
-        stats:::lag(divida, 0:9) +
-        stats:::lag(cv, 1:9) +
-        stats:::lag(tamanho, 0:9),
-data = ww_con,
-effect = "individual",
-model = "twosteps",
-collapse = TRUE,
-transformation = "ld",
-fsm = "full",
-)
-
-tex_m4 <- extract(m4,
-    robust = TRUE,
-    include.wald = FALSE,
-    include.nobs = FALSE,
-    include.sargan = FALSE
-)
-
-mysum <- summary(m4, robust = TRUE)
-
-obs <- c(obs, nrow(ww_con))
-
-sargan <- c(
-    sargan,
-    round(
-        as.numeric(unlist(mysum[11])[2]), 3
-    )
-)
-
-arbond <- c(
-    arbond,
-    round(
-        as.numeric(unlist(mysum[13])[2]), 3
-    )
-)
-
-## WW unconstrained.
-ww_un <- subset(ds, dum_ww == 0)
-m5 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
-    ln_epu + fcl_normalizado + divida + cv + tamanho |
-    stats:::lag(inv, 1:9) +
-        stats:::lag(sq_inv, 1:1) +
-        stats:::lag(fcl_normalizado, 2:2) +
-        stats:::lag(divida, 1:1) +
-        stats:::lag(cv, 3:9) +
-        stats:::lag(tamanho, 1:9),
-data = ww_un,
-effect = "individual",
-model = "twosteps",
-collapse = TRUE,
-transformation = "ld",
-fsm = "full",
-)
-
-tex_m5 <- extract(m5,
-    robust = TRUE,
-    include.wald = FALSE,
-    include.nobs = FALSE,
-    include.sargan = FALSE
-)
-
-mysum <- summary(m5, robust = TRUE)
-
-obs <- c(obs, nrow(ww_un))
-
-sargan <- c(
-    sargan,
-    round(
-        as.numeric(unlist(mysum[11])[2]), 3
-    )
-)
-
-arbond <- c(
-    arbond,
-    round(
-        as.numeric(unlist(mysum[13])[2]), 3
-    )
-)
-
 # SA constrained
 sa_con <- subset(ds, dum_sa == 1)
 sa_con <- filter_seq(sa_con, sa_con$ano, 4)
-m6 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
+m4 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
     ln_epu + fcl_normalizado + divida + cv + tamanho |
     stats:::lag(inv, 0:0) +
         stats:::lag(sq_inv, 0:0) +
@@ -263,14 +176,14 @@ transformation = "ld",
 fsm = "full",
 )
 
-tex_m6 <- extract(m6,
+tex_m4 <- extract(m4,
     robust = TRUE,
     include.wald = FALSE,
     include.nobs = FALSE,
     include.sargan = FALSE
 )
 
-mysum <- summary(m6, robust = TRUE)
+mysum <- summary(m4, robust = TRUE)
 
 obs <- c(obs, nrow(sa_con))
 
@@ -291,7 +204,7 @@ arbond <- c(
 # SA unconstrained.
 sa_un <- subset(ds, dum_sa == 0)
 sa_un <- filter_seq(sa_un, sa_un$ano, 4)
-m7 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
+m5 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
     ln_epu + fcl_normalizado + divida + cv + tamanho |
     stats:::lag(inv, 2:2) +
         stats:::lag(sq_inv, 0:9) +
@@ -307,14 +220,14 @@ transformation = "ld",
 fsm = "full",
 )
 
-tex_m7 <- extract(m7,
+tex_m5 <- extract(m5,
     robust = TRUE,
     include.wald = FALSE,
     include.nobs = FALSE,
     include.sargan = FALSE
 )
 
-mysum <- summary(m7, robust = TRUE)
+mysum <- summary(m5, robust = TRUE)
 
 obs <- c(obs, nrow(sa_un))
 
@@ -332,6 +245,92 @@ arbond <- c(
     )
 )
 
+# WW constrained.
+ww_con <- subset(ds, dum_ww == 1)
+ww_con <- filter_seq(ww_con, ww_con$ano, 4)
+m6 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
+    ln_epu + fcl_normalizado + divida + cv + tamanho |
+    stats:::lag(inv, 2:9) +
+        stats:::lag(sq_inv, 0:9) +
+        stats:::lag(fcl_normalizado, 2:9) +
+        stats:::lag(divida, 0:9) +
+        stats:::lag(cv, 1:9) +
+        stats:::lag(tamanho, 0:9),
+data = ww_con,
+effect = "individual",
+model = "twosteps",
+collapse = TRUE,
+transformation = "ld",
+fsm = "full",
+)
+
+tex_m6 <- extract(m6,
+    robust = TRUE,
+    include.wald = FALSE,
+    include.nobs = FALSE,
+    include.sargan = FALSE
+)
+
+mysum <- summary(m6, robust = TRUE)
+
+obs <- c(obs, nrow(ww_con))
+
+sargan <- c(
+    sargan,
+    round(
+        as.numeric(unlist(mysum[11])[2]), 3
+    )
+)
+
+arbond <- c(
+    arbond,
+    round(
+        as.numeric(unlist(mysum[13])[2]), 3
+    )
+)
+
+## WW unconstrained.
+ww_un <- subset(ds, dum_ww == 0)
+m7 <- pgmm(inv ~ stats:::lag(inv, 1:1) + stats:::lag(sq_inv, 1:1) +
+    ln_epu + fcl_normalizado + divida + cv + tamanho |
+    stats:::lag(inv, 1:9) +
+        stats:::lag(sq_inv, 1:1) +
+        stats:::lag(fcl_normalizado, 2:2) +
+        stats:::lag(divida, 1:1) +
+        stats:::lag(cv, 3:9) +
+        stats:::lag(tamanho, 1:9),
+data = ww_un,
+effect = "individual",
+model = "twosteps",
+collapse = TRUE,
+transformation = "ld",
+fsm = "full",
+)
+
+tex_m7 <- extract(m7,
+    robust = TRUE,
+    include.wald = FALSE,
+    include.nobs = FALSE,
+    include.sargan = FALSE
+)
+
+mysum <- summary(m7, robust = TRUE)
+
+obs <- c(obs, nrow(ww_un))
+
+sargan <- c(
+    sargan,
+    round(
+        as.numeric(unlist(mysum[11])[2]), 3
+    )
+)
+
+arbond <- c(
+    arbond,
+    round(
+        as.numeric(unlist(mysum[13])[2]), 3
+    )
+)
 
 ### Latex format
 
@@ -346,7 +345,7 @@ models_second <- list(
 
 
 label <- list("Amostra completa" = 1, "Índice KZ" = 2:3)
-label_2 <- list("Índice WW" = 1:2, "Índice SA" = 3:4)
+label_2 <- list("Índice SA" = 1:2, "Índice WW" = 3:4)
 
 model_names <- c(
     "Amostra completa",
