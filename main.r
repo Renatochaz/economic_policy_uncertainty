@@ -228,10 +228,9 @@ write.csv(ds, "raw-data/py_macro.csv", row.names = FALSE)
 
 ## Generate var list to descriptive statistics.
 finvar_list <- c(
-    "epu", "inv", "fc", "divida", "cv", "caixa_normalizado",
+    "epu", "inv", "fcl_normalizado", "divida", "cv", "caixa_normalizado",
     "dividendos_normalizado", "tamanho", "q_tobin",
-    "cob_juros", "div_pl", "roa", "roe", "rok",
-    "divonerosa_normalizado", "fcl_normalizado"
+    "cob_juros", "div_pl", "roa", "roe", "rok"
 )
 
 ## Genera descriptive tables
