@@ -310,15 +310,15 @@ cons_singlenorm <- function(df, var1, var2) {
 ## cob_juros, div_pl, roa, roe, rok
 ## df: A dataset.
 cons_finvars <- function(df) {
-  vec_inv <- cons_normdef(df, "at", "at", "at", "-")
+  vec_inv <- cons_normdef(df, "k", "k", "k", "-")
   vec_cv <- cons_normdef(df, "v", "v", "v", "-")
-  vec_fc <- cons_norm(df, "ll", "depreciacao", "at", "+")
-  vec_divida <- cons_norm(df, "d_cp", "d_lp", "at", "+")
-  vec_caixanorm <- cons_singlenorm(df, "caixa", "at")
-  vec_divpagos_at <- cons_singlenorm(df, "dividendos", "at")
+  vec_fc <- cons_norm(df, "ll", "depreciacao", "k", "+")
+  vec_divida <- cons_norm(df, "d_cp", "d_lp", "k", "+")
+  vec_caixanorm <- cons_singlenorm(df, "caixa", "k")
+  vec_divpagos_at <- cons_singlenorm(df, "dividendos", "k")
   vec_rok <- cons_singlenorm(df, "ll", "k")
-  vec_fcl <- cons_singlenorm(df, "fcl", "at")
-  vec_onerosa <- cons_singlenorm(df, "div_onerosa", "at")
+  vec_fcl <- cons_singlenorm(df, "fcl", "k")
+  vec_onerosa <- cons_singlenorm(df, "div_onerosa", "k")
   vec_vendas <- cons_singlenorm(df, "v", "v")
 
   ## Subsetting skipped observations.
