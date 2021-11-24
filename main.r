@@ -206,7 +206,13 @@ const_vars <- c(
     "divlp_at", "cv_industria", "fcl_normalizado", "divonerosa_normalizado",
     "tx_vendas"
 )
-ds[, const_vars] <- winsorize_vars(ds, const_vars)
+
+temp <- ds[, const_vars]
+temp <- lapply(temp, Winsorize, probs = c(0.05, 0.95))
+ds[, const_vars] <- temp
+
+temp <- lapply(temp, Winsorize, probs = c(0.1, 0.9))
+ds$divida <- temp$divida
 
 ## Compute ln economic policy uncertainty index.
 ds$ln_epu <- log(ds$epu)
@@ -223,11 +229,11 @@ ds$dum_ww <- cons_dummy(ds, "ww")
 ds$dum_sa <- cons_dummy(ds, "sa")
 ds$dum_fcp <- cons_dummy(ds, "fcp")
 
-## Create dataset to python growth sales operation.
+## Create dataset to macro-vars operation.
 write.csv(ds, "raw-data/py_macro.csv", row.names = FALSE)
 
 
-## Reload dataset after python operations.
+## Reload dataset after python macro-vars and pib operations.
 ds <- read.csv("global.csv",
     stringsAsFactors = FALSE, fileEncoding = "UTF-8"
 )
@@ -236,23 +242,20 @@ ds <- read.csv("global.csv",
 finvar_list <- c(
     "epu", "inv", "fc", "fcl_normalizado", "divida", "cv", "caixa_normalizado",
     "dividendos_normalizado", "tamanho", "q_tobin",
-    "cob_juros", "div_pl", "roa", "roe", "rok"
+    "cob_juros", "roa", "roe", "rok"
 )
 
 
 ## Genera descriptive tables
 cons_descriptive(ds, finvar_list)
-cons_descriptive(subset(ds, dum_kz == 1), finvar_list)
-cons_descriptive(subset(ds, dum_kz == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_kz == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_kz == 0), finvar_list)
 
-cons_descriptive(subset(ds, dum_ww == 1), finvar_list)
-cons_descriptive(subset(ds, dum_ww == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_ww == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_ww == 0), finvar_list)
 
-cons_descriptive(subset(ds, dum_sa == 1), finvar_list)
-cons_descriptive(subset(ds, dum_sa == 0), finvar_list)
-
-cons_descriptive(subset(ds, dum_fcp == 1), finvar_list)
-cons_descriptive(subset(ds, dum_fcp == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_sa == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_sa == 0), finvar_list)
 
 ## Generate industrial distribution
 cons_freqtable(ds, "setor_economatica")
