@@ -226,12 +226,19 @@ ds$dum_fcp <- cons_dummy(ds, "fcp")
 ## Create dataset to python growth sales operation.
 write.csv(ds, "raw-data/py_macro.csv", row.names = FALSE)
 
+
+## Reload dataset after python operations.
+ds <- read.csv("global.csv",
+    stringsAsFactors = FALSE, fileEncoding = "UTF-8"
+)
+
 ## Generate var list to descriptive statistics.
 finvar_list <- c(
-    "epu", "inv", "fcl_normalizado", "divida", "cv", "caixa_normalizado",
+    "epu", "inv", "fc", "fcl_normalizado", "divida", "cv", "caixa_normalizado",
     "dividendos_normalizado", "tamanho", "q_tobin",
     "cob_juros", "div_pl", "roa", "roe", "rok"
 )
+
 
 ## Genera descriptive tables
 cons_descriptive(ds, finvar_list)
