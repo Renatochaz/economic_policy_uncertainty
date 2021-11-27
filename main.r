@@ -238,6 +238,43 @@ ds <- read.csv("global.csv",
     stringsAsFactors = FALSE, fileEncoding = "UTF-8"
 )
 
+## Adjust SA Index
+ds_mock <- ds
+
+ds_mock$idade <- ifelse(ds_mock$idade > 37, 37, ds_mock$idade)
+ds_mock$at <- ifelse(ds_mock$at > 4500000000, 4500000000, ds_mock$at)
+
+ds_mock$sa <- cons_sa(ds_mock)
+ds_mock$sa == ds$sa
+
+ds_mock$dum_sa <- cons_dummy(ds_mock, "sa")
+ds_mock$dum_sa == ds$dum_sa
+ds$dum_sa <- ds_mock$dum_sa
+
+
+# FIRM SIZE DUMMY
+temp_var <- ds[, "at"]
+newvar <- 0
+## 40% quintile.
+a <- quantile(temp_var, probs = seq(0.2, 1, 0.2))[[2]]
+## 60% quintile.
+b <- quantile(temp_var, probs = seq(0.2, 1, 0.2))[[3]]
+
+for (i in seq_len(length(temp_var))) {
+    if (temp_var[i] <= a) {
+        newvar[i] <- 0
+    } else if (temp_var[i] >= b) {
+        newvar[i] <- 1
+    } else {
+        newvar[i] <- NA
+    }
+}
+
+ds$dum_size <- newvar
+
+## Create adjusted dataset.
+write.csv(ds, "global.csv", row.names = FALSE)
+
 ## Generate var list to descriptive statistics.
 finvar_list <- c(
     "epu", "inv", "fc", "fcl_normalizado", "divida", "cv", "caixa_normalizado",
@@ -254,8 +291,8 @@ cons_descriptive_small(subset(ds, dum_kz == 0), finvar_list)
 cons_descriptive_small(subset(ds, dum_ww == 1), finvar_list)
 cons_descriptive_small(subset(ds, dum_ww == 0), finvar_list)
 
-cons_descriptive_small(subset(ds, dum_sa == 1), finvar_list)
-cons_descriptive_small(subset(ds, dum_sa == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_fcp == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_fcp == 0), finvar_list)
 
 ## Generate industrial distribution
 cons_freqtable(ds, "setor_economatica")

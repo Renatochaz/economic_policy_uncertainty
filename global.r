@@ -393,7 +393,7 @@ cons_ww <- function(df) {
 ## Return a vector with the SA Index.
 cons_sa <- function(df) {
   df$sa <- (-0.737 * df$tamanho) +
-    (0.043 * (df$tamanho * df$tamanho)) -
+    (0.043 * (df$tamanho^2)) -
     (0.040 * df$idade_firma)
   return(df$sa)
 }
