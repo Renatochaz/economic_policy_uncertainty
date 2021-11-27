@@ -294,6 +294,9 @@ cons_descriptive_small(subset(ds, dum_ww == 0), finvar_list)
 cons_descriptive_small(subset(ds, dum_fcp == 1), finvar_list)
 cons_descriptive_small(subset(ds, dum_fcp == 0), finvar_list)
 
+cons_descriptive_small(subset(ds, dum_size == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_size == 0), finvar_list)
+
 ## Generate industrial distribution
 cons_freqtable(ds, "setor_economatica")
 

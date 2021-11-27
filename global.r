@@ -446,8 +446,8 @@ cons_descriptive_small <- function(df, varlist) {
   df_temp <- subset(df, select = c(varlist))
   stargazer(df_temp,
     median = TRUE, digits = 4,
-    omit.summary.stat = c("p25", "p75", "min", "max", "n", "mean"),
-    summary.stat = c("median", "sd")
+    omit.summary.stat = c("p25", "p75", "min", "max", "n", "median"),
+    summary.stat = c("mean", "sd")
   )
 }
 
