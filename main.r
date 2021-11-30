@@ -141,7 +141,7 @@ write.csv(ds, "raw-data/py_create_age_epu.csv", row.names = FALSE)
 df_info <- get_info_companies(tempdir())
 write.csv(df_info, "raw-data/info_companies.csv", row.names = FALSE)
 
-## Run py-age-epu.ipynb and py-sales.ipynb
+## Run py-age-epu.ipynb (or age_v2) and py-sales.ipynb
 ## Open returned datasets from Python.
 ds <- read.csv("raw-data/ds_to_r.csv",
     stringsAsFactors = FALSE, fileEncoding = "UTF-8"
@@ -241,15 +241,16 @@ ds <- read.csv("global.csv",
 ## Adjust SA Index
 ds_mock <- ds
 
-ds_mock$idade <- ifelse(ds_mock$idade > 37, 37, ds_mock$idade)
-ds_mock$at <- ifelse(ds_mock$at > 4500000000, 4500000000, ds_mock$at)
+ds_mock$idade_firma <- ifelse(ds_mock$idade_firma > 37, 37, ds_mock$idade_firma)
+ds_mock$at <- ifelse(ds_mock$at > (450000000 * 5.6), 4500000000 * 5.6, ds_mock$at)
+ds_mock$tamanho <- log(ds_mock$at)
 
 ds_mock$sa <- cons_sa(ds_mock)
-ds_mock$sa == ds$sa
-
 ds_mock$dum_sa <- cons_dummy(ds_mock, "sa")
+
 ds_mock$dum_sa == ds$dum_sa
-ds$dum_sa <- ds_mock$dum_sa
+
+cons_descriptive(subset(ds_mock,dum_sa==0), finvar_list)
 
 
 # FIRM SIZE DUMMY
@@ -290,6 +291,9 @@ cons_descriptive_small(subset(ds, dum_kz == 0), finvar_list)
 
 cons_descriptive_small(subset(ds, dum_ww == 1), finvar_list)
 cons_descriptive_small(subset(ds, dum_ww == 0), finvar_list)
+
+cons_descriptive_small(subset(ds, dum_sa == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_sa == 0), finvar_list)
 
 cons_descriptive_small(subset(ds, dum_fcp == 1), finvar_list)
 cons_descriptive_small(subset(ds, dum_fcp == 0), finvar_list)
