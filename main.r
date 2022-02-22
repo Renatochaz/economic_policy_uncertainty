@@ -141,7 +141,7 @@ write.csv(ds, "raw-data/py_create_age_epu.csv", row.names = FALSE)
 df_info <- get_info_companies(tempdir())
 write.csv(df_info, "raw-data/info_companies.csv", row.names = FALSE)
 
-## Run py-age-epu.ipynb and py-sales.ipynb
+## Run py-age-epu.ipynb (or age_v2) and py-sales.ipynb
 ## Open returned datasets from Python.
 ds <- read.csv("raw-data/ds_to_r.csv",
     stringsAsFactors = FALSE, fileEncoding = "UTF-8"
@@ -206,7 +206,13 @@ const_vars <- c(
     "divlp_at", "cv_industria", "fcl_normalizado", "divonerosa_normalizado",
     "tx_vendas"
 )
-ds[, const_vars] <- winsorize_vars(ds, const_vars)
+
+temp <- ds[, const_vars]
+temp <- lapply(temp, Winsorize, probs = c(0.05, 0.95))
+ds[, const_vars] <- temp
+
+temp <- lapply(temp, Winsorize, probs = c(0.1, 0.9))
+ds$divida <- temp$divida
 
 ## Compute ln economic policy uncertainty index.
 ds$ln_epu <- log(ds$epu)
@@ -223,29 +229,77 @@ ds$dum_ww <- cons_dummy(ds, "ww")
 ds$dum_sa <- cons_dummy(ds, "sa")
 ds$dum_fcp <- cons_dummy(ds, "fcp")
 
-## Create dataset to python growth sales operation.
+## Create dataset to macro-vars operation.
 write.csv(ds, "raw-data/py_macro.csv", row.names = FALSE)
+
+
+## Reload dataset after python macro-vars and pib operations.
+ds <- read.csv("global.csv",
+    stringsAsFactors = FALSE, fileEncoding = "UTF-8"
+)
+
+## Adjust SA Index
+ds_mock <- ds
+
+ds_mock$idade_firma <- ifelse(ds_mock$idade_firma > 37, 37, ds_mock$idade_firma)
+ds_mock$at <- ifelse(ds_mock$at > (450000000 * 5.6), 4500000000 * 5.6, ds_mock$at)
+ds_mock$tamanho <- log(ds_mock$at)
+
+ds_mock$sa <- cons_sa(ds_mock)
+ds_mock$dum_sa <- cons_dummy(ds_mock, "sa")
+
+ds_mock$dum_sa == ds$dum_sa
+
+cons_descriptive(subset(ds_mock,dum_sa==0), finvar_list)
+
+
+# FIRM SIZE DUMMY
+temp_var <- ds[, "at"]
+newvar <- 0
+## 40% quintile.
+a <- quantile(temp_var, probs = seq(0.2, 1, 0.2))[[2]]
+## 60% quintile.
+b <- quantile(temp_var, probs = seq(0.2, 1, 0.2))[[3]]
+
+for (i in seq_len(length(temp_var))) {
+    if (temp_var[i] <= a) {
+        newvar[i] <- 0
+    } else if (temp_var[i] >= b) {
+        newvar[i] <- 1
+    } else {
+        newvar[i] <- NA
+    }
+}
+
+ds$dum_size <- newvar
+
+## Create adjusted dataset.
+write.csv(ds, "global.csv", row.names = FALSE)
 
 ## Generate var list to descriptive statistics.
 finvar_list <- c(
-    "epu", "inv", "fcl_normalizado", "divida", "cv", "caixa_normalizado",
+    "epu", "inv", "fc", "fcl_normalizado", "divida", "cv", "caixa_normalizado",
     "dividendos_normalizado", "tamanho", "q_tobin",
-    "cob_juros", "div_pl", "roa", "roe", "rok"
+    "cob_juros", "roa", "roe", "rok"
 )
+
 
 ## Genera descriptive tables
 cons_descriptive(ds, finvar_list)
-cons_descriptive(subset(ds, dum_kz == 1), finvar_list)
-cons_descriptive(subset(ds, dum_kz == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_kz == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_kz == 0), finvar_list)
 
-cons_descriptive(subset(ds, dum_ww == 1), finvar_list)
-cons_descriptive(subset(ds, dum_ww == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_ww == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_ww == 0), finvar_list)
 
-cons_descriptive(subset(ds, dum_sa == 1), finvar_list)
-cons_descriptive(subset(ds, dum_sa == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_sa == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_sa == 0), finvar_list)
 
-cons_descriptive(subset(ds, dum_fcp == 1), finvar_list)
-cons_descriptive(subset(ds, dum_fcp == 0), finvar_list)
+cons_descriptive_small(subset(ds, dum_fcp == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_fcp == 0), finvar_list)
+
+cons_descriptive_small(subset(ds, dum_size == 1), finvar_list)
+cons_descriptive_small(subset(ds, dum_size == 0), finvar_list)
 
 ## Generate industrial distribution
 cons_freqtable(ds, "setor_economatica")
