@@ -1,0 +1,16 @@
+sudo rm -r economic_policy_uncertainty
+sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
+cd economic_policy_uncertainty
+sudo git checkout test_lab
+
+
+gcloud compute scp gmm-1:~/economic_policy_uncertainty/test_lab/tobinq_ww/results/collapse/ww_unconstrained.csv results_2/ww_unconstrained.csv --zone=us-central1-c
+
+### Params
+dummy = "dum_ww"
+constraint = 0
+sub = "yes"
+collap = FALSE
+collapsave = "no_collapse"
+savename = "ww_unconstrained"
+source("test_lab/nomacro_ww/compute_models.r")

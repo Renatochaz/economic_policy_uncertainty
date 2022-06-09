@@ -1,0 +1,29 @@
+sudo rm -r economic_policy_uncertainty
+sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
+cd economic_policy_uncertainty
+sudo git checkout test_lab
+
+
+gcloud compute scp gmm-1:~/economic_policy_uncertainty/test_lab/tobin_norm/results/collapse/kz_constrained.csv results_tobin_norm/kz_constrained.csv --zone=us-central1-c
+
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/test_lab/tobin_norm/results/collapse/kz_unconstrained.csv results_tobin_norm/kz_unconstrained.csv --zone=us-central1-c
+
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/test_lab/tobin_norm/results/collapse/ww_constrained.csv results_tobin_norm/ww_constrained.csv --zone=us-central1-c
+
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/test_lab/tobin_norm/results/collapse/ww_unconstrained.csv results_tobin_norm/ww_unconstrained.csv --zone=us-central1-c
+
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/test_lab/tobin_norm/results/collapse/sa_constrained.csv results_tobin_norm/sa_constrained.csv --zone=us-central1-c
+
+gcloud compute scp gmm-6:~/economic_policy_uncertainty/test_lab/tobin_norm/results/collapse/sa_unconstrained.csv results_tobin_norm/sa_unconstrained.csv --zone=us-central1-c
+
+### Params
+savename = "kz_constrained"
+dummy = "dum_kz"
+constraint = 1
+sub = "yes"
+collap = TRUE
+collapsave = "collapse"
+source("test_lab/tobin_norm/compute_models.r")
+
+###
+cd economic_policy_uncertainty/test_lab/tobin_fc

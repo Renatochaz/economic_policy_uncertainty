@@ -1,0 +1,22 @@
+sudo rm -r economic_policy_uncertainty
+sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
+cd economic_policy_uncertainty
+sudo git checkout test_lab
+
+
+gcloud compute scp gmm-1:~/economic_policy_uncertainty/results/collapse/kz_constrained.csv results_1/collapse/kz_constrained.csv --zone=us-central1-c
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/results/collapse/kz_unconstrained.csv results_1/collapse/kz_unconstrained.csv --zone=us-central1-c
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/results/collapse/ww_constrained.csv results_1/collapse/ww_constrained.csv --zone=us-central1-c
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/results/collapse/ww_unconstrained.csv results_1/collapse/ww_unconstrained.csv --zone=us-central1-c
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/results/no_collapse/sa_constrained.csv results_1/no_collapse/sa_constrained.csv --zone=us-central1-c
+gcloud compute scp gmm-6:~/economic_policy_uncertainty/results/collapse/sa_unconstrained.csv results_1/collapse/sa_unconstrained.csv --zone=us-central1-c
+
+
+### Params
+dummy = "dum_sa"
+constraint = 0
+sub = "yes"
+collap = TRUE
+collapsave = "collapse"
+savename = "sa_unconstrained"
+source("compute_models.r")

@@ -1,0 +1,77 @@
+sudo rm -r economic_policy_uncertainty
+sudo git clone https://github.com/Renatochaz/economic_policy_uncertainty.git
+cd economic_policy_uncertainty
+sudo git checkout test_lab
+
+
+gcloud compute scp gmm-1:~/economic_policy_uncertainty/test_lab/iee/results/collapse/kz_constrained.csv iee/kz_constrained.csv --zone=us-central1-c
+
+### Params
+savename = "kz_constrained"
+mod = c(2,2,0,9) 
+dummy = "dum_kz"
+constraint = 1
+sub = "yes"
+collap = TRUE
+collapsave = "collapse"
+source("test_lab/iee/compute_models.r")
+
+gcloud compute scp gmm-2:~/economic_policy_uncertainty/test_lab/iee/results/collapse/kz_unconstrained.csv iee/kz_unconstrained.csv --zone=us-central1-c
+
+### Params
+savename = "kz_unconstrained"
+mod = c(1,9,2,2) 
+dummy = "dum_kz"
+constraint = 0
+sub = "yes"
+collap = TRUE
+collapsave = "collapse"
+source("test_lab/iee/compute_models.r")
+
+gcloud compute scp gmm-3:~/economic_policy_uncertainty/test_lab/iee/results/collapse/sa_constrained.csv iee/sa_constrained.csv --zone=us-central1-c
+
+### Params
+savename = "sa_constrained"
+mod = c(1,1,2,2) 
+dummy = "dum_sa"
+constraint = 1
+sub = "yes"
+collap = TRUE
+collapsave = "collapse"
+source("test_lab/iee/compute_models.r")
+
+gcloud compute scp gmm-4:~/economic_policy_uncertainty/test_lab/iee/results/collapse/sa_unconstrained.csv iee/sa_unconstrained.csv --zone=us-central1-c
+
+### Params
+savename = "sa_unconstrained"
+mod = c(0,9,2,9) 
+dummy = "dum_sa"
+constraint = 0
+sub = "yes"
+collap = TRUE
+collapsave = "collapse"
+source("test_lab/iee/compute_models.r")
+
+gcloud compute scp gmm-5:~/economic_policy_uncertainty/test_lab/iee/results/collapse/ww_constrained.csv iee/ww_constrained.csv --zone=us-central1-c
+
+### Params
+savename = "ww_constrained"
+mod = c(2,9,1,9) 
+dummy = "dum_ww"
+constraint = 1
+sub = "yes"
+collap = TRUE
+collapsave = "collapse"
+source("test_lab/iee/compute_models.r")
+
+gcloud compute scp gmm-6:~/economic_policy_uncertainty/test_lab/iee/results/collapse/ww_unconstrained.csv iee/ww_unconstrained.csv --zone=us-central1-c
+
+### Params
+savename = "ww_unconstrained"
+mod = c(1,1,1,1) 
+dummy = "dum_ww"
+constraint = 0
+sub = "no"
+collap = TRUE
+collapsave = "collapse"
+source("test_lab/iee/compute_models.r")
